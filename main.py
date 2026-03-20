@@ -2,10 +2,18 @@ import os
 import argparse
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 
 
 def main():
     load_dotenv()
+
+    ## argparse variables
+    parser = argparse.ArgumentParser(prog="Agentic Dev", description="Toy Agent from Boot.Dev module")
+    # parser.add_help = True
+    parser.add_argument("user_prompt", type=str, help="The prompt to be passed to the LLM")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
+    args = parser.parse_args()
 
     ## gemini api variables
     api_key: str = os.environ.get("GEMINI_API_KEY")
@@ -14,18 +22,14 @@ def main():
 
     client = genai.Client(api_key=api_key)
     model: str = "gemini-2.5-flash"
+    messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
 
-    ## argparse variables
-    parser = argparse.ArgumentParser(prog="Agentic Dev", description="Toy Agent from Boot.Dev module")
-    # parser.add_help = True
-    parser.add_argument("user_prompt", type=str, help="The prompt to be passed to the LLM")
-    args = parser.parse_args()
-
-    prompt: str = args.user_prompt
-    if prompt is not None:
-        response = client.models.generate_content(model=model, contents=prompt)
-        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-        print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+    if messages is not None:
+        response = client.models.generate_content(model=model, contents=messages)
+        if args.verbose:
+            print(f"User prompt: {args.user_prompt}")
+            print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+            print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
         print(response.text)
 
 
