@@ -8,4 +8,6 @@
    5. User Input
    6. Multiple Messages
    7. Verbose Output
-2. 
+2. Functions
+   1. Calculator App
+   2. Get Files
