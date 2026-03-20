@@ -11,3 +11,4 @@
 2. Functions
    1. Calculator App
    2. Get Files
+   3. Get File Content
