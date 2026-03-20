@@ -1,5 +1,5 @@
-from os import path
-from .utils import get_target_directory
+from utils import get_target_directory
+from config import MAX_CHARS
 
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
@@ -14,6 +14,10 @@ def get_file_content(working_directory: str, file_path: str) -> str:
                 return f'Error: "{e}"'
             
     try:
-        pass
+        with open(file_path_str) as f:
+            content : str = f.read(MAX_CHARS)
+            if f.read(1):
+                content += f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
+        return content
     except Exception as e:
         return f'Error: "{e}"'
