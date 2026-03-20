@@ -27,6 +27,6 @@ def get_target_path(working_directory: str, path: str) -> str:
     target_path_str: str = normpath(join(working_dir_path_str, path))
     if not commonpath([working_dir_path_str, target_path_str]) == working_dir_path_str:
         raise OOBError()
-    if not isdir(target_path_str) and not isfile(target_path_str):
+    if not isdir(target_path_str):
         raise NotAPathError()
     return target_path_str
