@@ -1,9 +1,9 @@
 from os.path import abspath, normpath, join, commonpath, isdir, isfile
 
-def get_target_directory(working_directory: str, directory: str) -> str:
+def get_target_directory(working_directory: str, path: str) -> str:
     ## validate and return target directory
     working_dir_path_str: str = abspath(working_directory) 
-    target_path_str: str = normpath(join(working_dir_path_str, directory))
+    target_path_str: str = normpath(join(working_dir_path_str, path))
     if not commonpath([working_dir_path_str, target_path_str]) == working_dir_path_str:
         raise Exception("OOB")
     if not isdir(target_path_str) and not isfile(target_path_str):
