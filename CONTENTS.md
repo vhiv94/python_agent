@@ -17,3 +17,7 @@
 3. Get File Content
 4. Write Files
 5. Run Python
+   
+### Ch 3: Function Calling
+
+1. System Prompt

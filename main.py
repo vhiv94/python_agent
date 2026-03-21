@@ -1,8 +1,9 @@
 import os
 import argparse
 from dotenv import load_dotenv
-from google import genai
-from google.genai import types
+from google.genai import Client, types
+
+from prompts import system_prompt
 
 
 def main():
@@ -20,12 +21,13 @@ def main():
     if api_key is None:
         raise RuntimeError("please provide a valid gemini api key in .env")
 
-    client = genai.Client(api_key=api_key)
+    client = Client(api_key=api_key)
     model: str = "gemini-2.5-flash"
     messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
+    config = types.GenerateContentConfig(system_instruction=system_prompt, temperature=0)
 
     if messages is not None:
-        response = client.models.generate_content(model=model, contents=messages)
+        response = client.models.generate_content(model=model, contents=messages, config=config)
         if args.verbose:
             print(f"User prompt: {args.user_prompt}")
             print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
