@@ -21,3 +21,10 @@
 ### Ch 3: Function Calling
 
 1. System Prompt
+2. Function Declaration
+3. More Declarations
+4. Calling Functions
+   
+### Ch 4: Agents
+
+1. Agent Loop
